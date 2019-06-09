@@ -7,11 +7,8 @@ pipeline {
   stages {
     stage('Docker build') {
       steps {
-        sh 'docker build -t dockflow/geofence-demo/ $BRANCH .'
+        sh 'docker build -t dockflow/geofence-demo/ $GIT_BRANCH .'
       }
     }
-  }
-  environment {
-    BRANCH = env.BRANCH_NAME
   }
 }
