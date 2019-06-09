@@ -8,6 +8,7 @@ pipeline {
     stage('Docker build') {
       steps {
         sh 'docker build -t dockflow/geofence-demo/$GIT_BRANCH .'
+        sh 'cd /app && docker-compose up -d'
       }
     }
   }
