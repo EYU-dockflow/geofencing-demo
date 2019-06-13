@@ -25,14 +25,15 @@ export class SocketReaderService{
                 //self.aHandlerObject.handleData(data.event);
                 data = data.event;
                 logger.debug('<span style="color:red;font-weight:bold;">A chaincode event happened - txId: ' + (data.tx_id ? data.tx_id : '-no tx id-') + '</span>');
-                if(data.payload && data.payload.schema && data.payload.id){
-                     logger.debug(data.payload.schema + " / "+ data.payload.id.substr(0,36) +" )");
+                if(data.payload && data.payload.schema && data.payload.id && data.event_name){
+                     logger.debug('Event: "' + data.event_name + "\" for a "  + data.payload.schema + " with uuid: \""+ data.payload.id.substr(0,36) +"\"");
+                     logger.debug('<span style="color:grey;">' + JSON.stringify(data) + '</span>');
                 }
             }
             
         });
         this.io.on('chainblock', function(data:any){
-           logger.debug('A new block was pushed to the blockchain ---- ' +  data.header.number + ' / ' + data.header.data_hash)
+           logger.debug('<span style="color:green;font-weight:bold;">🎉 A new block was pushed to the blockchain ---- ' +  data.header.number + ' / ' + data.header.data_hash + '</span>')
         });
         this.io.on('error',(err:any)=>{
             logger.debug("Error on the socket" + JSON.stringify(err));

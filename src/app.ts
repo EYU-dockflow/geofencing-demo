@@ -33,7 +33,6 @@ console.log('Running file watcher.')
 
 function sendLog(){
     fs.readFile('./logs/syncer.log', 'utf8', function(err:any, contents:any) {
-      console.log('Emitting filechange');
       io.emit('file-change-event',contents);
     });
 }
