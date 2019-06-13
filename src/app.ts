@@ -44,12 +44,4 @@ setInterval(()=>{
   sendLog();
 },2000)
 
-
-
-
-
-setInterval(()=>{
-  logger.debug('SPAM');
-},2000)
-
 let socket = SocketReaderService.getStream();
