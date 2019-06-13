@@ -24,7 +24,7 @@ export class SocketReaderService{
             if(data && data.event){
                 //self.aHandlerObject.handleData(data.event);
                 data = data.event;
-                logger.debug('A chaincode event happened - txId: ' + (data.tx_id ? data.tx_id : '-no tx id-'));
+                logger.debug('<span style="color:red;font-weight:bold;">A chaincode event happened - txId: ' + (data.tx_id ? data.tx_id : '-no tx id-') + '</span>');
                 if(data.payload && data.payload.schema && data.payload.id){
                      logger.debug(data.payload.schema + " / "+ data.payload.id.substr(0,36) +" )");
                 }
