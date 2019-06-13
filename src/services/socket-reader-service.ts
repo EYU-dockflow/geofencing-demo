@@ -23,6 +23,7 @@ export class SocketReaderService{
         this.io.on('chaincodeevent', function(data:any){
             if(data && data.event){
                 //self.aHandlerObject.handleData(data.event);
+                data = data.event;
                 logger.debug('A chaincode event happened.' + (data.tx_id ? data.tx_id : '-no tx id-'));
                 if(data.payload && data.payload.schema && data.payload.id){
                      logger.debug("txId: " + data.tx_id + ": " + data.payload.schema + " / "+ data.payload.id.substr(0,36) +" )");
