@@ -19,6 +19,24 @@ export class SocketReaderService{
             logger.debug('Connected to Blockchain socket stream.');
         });
 
+
+        this.io.on('chaincodeevent', function(data:any){
+            if(data && data.event){
+                //self.aHandlerObject.handleData(data.event);
+                logger.debug('A chaincode event happened.');
+            }
+            
+        });
+        this.io.on('chainblock', function(data:any){
+           logger.debug('A new block was pushed to the blockchain ---- ' +  data.header.number + ' / ' + data.header.data_hash)
+        });
+        this.io.on('error',(err:any)=>{
+            logger.debug("Error on the socket" + JSON.stringify(err));
+        })
+        this.io.on('disconnect', function(ev:any){
+            console.log('Socket stream closed.');
+        });
+
     }
 
     public static getStream(){
