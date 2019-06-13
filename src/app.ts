@@ -1,6 +1,7 @@
 import { Application } from 'express';
 import { SocketReaderService } from './services/socket-reader-service';
 import { logger } from './services/logger';
+import { Geofence } from './geofence';
 
 const express = require( "express" );
 const app:Application = express();
@@ -26,11 +27,7 @@ http.listen(port);
 var io = io(http,{
   pingInterval: 1000
 });
-
 logger.debug('Server running on port ' + port);
-
-console.log('Running file watcher.')
-
 function sendLog(){
     fs.readFile('./logs/syncer.log', 'utf8', function(err:any, contents:any) {
       io.emit('file-change-event',contents);
@@ -44,3 +41,5 @@ setInterval(()=>{
 },2000)
 
 let socket = SocketReaderService.getStream();
+
+let geofence = new Geofence(socket);

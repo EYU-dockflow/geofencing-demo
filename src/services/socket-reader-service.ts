@@ -1,14 +1,17 @@
 import io from 'socket.io-client';
 import { logger } from './logger';
+import { RESTApi } from '../core/rest-api';
+import { config } from '../config'
+import { EventEmitter } from 'events';
 
-const config=require('../../config');
-
-export class SocketReaderService{
+export class SocketReaderService extends EventEmitter{
     private static instance:SocketReaderService;
 
     private io:SocketIOClient.Socket;
 
     constructor(){
+        super();
+        var self = this;
         var url = 'ws://' + config.bc_websocket_host + ':' + config.bc_websocket_port + '';
         this.io=io.connect(url,{
             transports: ['websocket']
@@ -24,10 +27,21 @@ export class SocketReaderService{
             if(data && data.event){
                 //self.aHandlerObject.handleData(data.event);
                 data = data.event;
-                logger.debug('<span style="color:red;font-weight:bold;">A chaincode event happened - txId: ' + (data.tx_id ? data.tx_id : '-no tx id-') + '</span>');
+                
                 if(data.payload && data.payload.schema && data.payload.id && data.event_name){
-                     logger.debug('Event: "' + data.event_name + "\" for a "  + data.payload.schema + " with uuid: \""+ data.payload.id.substr(0,36) +"\"");
-                     logger.debug('<span style="color:grey;">' + JSON.stringify(data) + '</span>');
+                     //logger.debug('Event: "' + data.event_name + "\" for a "  + data.payload.schema + " with uuid: \""+ data.payload.id.substr(0,36) +"\"");
+                     //logger.debug('<span style="color:grey;">' + JSON.stringify(data) + '</span>');
+                     RESTApi.getConnection().then((conn)=>{
+                        conn.get(data.payload.schema,data.payload.id).then((obj)=>{
+                            //logger.debug('Object was ' + JSON.stringify(JSON.parse(obj)));
+                            logger.debug('<span style="color:red;font-weight:bold;">A chaincode event happened - txId: ' + (data.tx_id ? data.tx_id : '-no tx id-') + '</span>');
+                            self.emit('transaction',data,JSON.parse(obj));
+                        }).catch((err)=>{
+                            logger.error('Could not get object from REST API ' + err);
+                        });
+                     }).catch((err)=>{
+                         logger.error('Could not get connection for REST API' + err);
+                     });
                 }
             }
             
@@ -43,6 +57,8 @@ export class SocketReaderService{
         });
 
     }
+
+
 
     public static getStream(){
         if(!this.instance){
