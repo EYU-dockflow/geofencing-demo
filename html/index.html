@@ -5,8 +5,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script>
       var socket = io();
-      socket.on("file-change-event", function () {
-        window.location.reload();
+      socket.on("file-change-event", function (contents) {
+        console.log(contents);
+          var objDiv = document.getElementById("theconsole");
+          objDiv.innerHTML = contents;
+          objDiv.scrollTop = objDiv.scrollHeight; 
       });
     </script>
     <style>
@@ -20,6 +23,8 @@
           line-height: 1.45;
           position: relative;
           overflow-x: auto;
+          height:80vh;
+          overflow-y:scroll;
       }
 
         body {
@@ -31,8 +36,7 @@
 <body>
     <img src="./dockflow_transparent.png" style="width:200px;float:left;" />
     <div style="clear:both;"></div>
-<pre><span style="color:white;font-weight:bold;">Dockflow geofence log</span>
-[[FILECONTENTS]]
-</pre>
+<span style="color:white;font-weight:bold;">Dockflow geofence log</span>
+<pre id="theconsole"></pre>
 </body>
 </html>
