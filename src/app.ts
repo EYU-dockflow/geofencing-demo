@@ -37,9 +37,9 @@ function sendLog(){
       io.emit('file-change-event',contents);
     });
 }
-fs.watch('./logs/syncer.log', ()=>{
+/*fs.watch('./logs/syncer.log', ()=>{
   sendLog();
-});
+});*/
 setInterval(()=>{
   sendLog();
 },2000)
