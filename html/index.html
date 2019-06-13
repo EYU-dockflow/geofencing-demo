@@ -22,8 +22,7 @@
           padding: 1em 1em 2.5em 1em;
           line-height: 1.45;
           position: relative;
-          overflow-x: scroll;
-          height:80vh;
+          overflow-x: auto;
           overflow-y:scroll;
       }
 
@@ -34,9 +33,14 @@
     </style>
 </head>
 <body>
-    <img src="./dockflow_transparent.png" style="width:200px;float:left;" />
-    <div style="clear:both;"></div>
-<span style="color:white;font-weight:bold;">Dockflow geofence log</span>
-<pre id="theconsole"></pre>
+  <div style="text-align:center;position:fixed;top:0;right:0;width:400px;z-index:4;">
+      <img src="./dockflow_transparent.png" style="width:200px;" /><br />
+      <span style="color:white;font-weight:bold;font-family:consolas,sans-serif;">Dockflow blockchain geofence (demo)</span>
+  </div>
+    
+<div id="theconsole-container" style="position:absolute;top:0;left:0;width:100vw;height:100vh;">
+    <pre id="theconsole">Fetching log...</pre>
+</div>
+
 </body>
 </html>
