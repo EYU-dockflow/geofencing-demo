@@ -40,7 +40,7 @@ export class Geofence{
         socket.on('transaction',(transaction, object)=>{
             logger.debug('transaction:'  + JSON.stringify(transaction));
             logger.debug('object' + JSON.stringify(object));
-
+logger.debug('Hello from Joren');
             let point:Point = this.makePoint(object.coordinate);
             let otherPoint:Point = this.makePoint([
                 4.401430,
