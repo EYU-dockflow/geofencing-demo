@@ -9,7 +9,7 @@ pipeline {
       steps {
         sh 'docker build -t dockflow/geofence-demo/$GIT_BRANCH .'
         sh 'cd /app && y \'\' |  docker-compose up -d --no-recreate'
-        sh 'docker restart demo-$GIT_BRANCH'
+        sh 'docker pull dockflow/geofence-demo/$GIT_BRANCH && docker restart demo-$GIT_BRANCH'
       }
     }
   }
