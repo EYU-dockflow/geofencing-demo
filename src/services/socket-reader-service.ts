@@ -33,6 +33,7 @@ export class SocketReaderService extends EventEmitter{
                      //logger.debug('<span style="color:grey;">' + JSON.stringify(data) + '</span>');
                      RESTApi.getConnection().then((conn)=>{
                         conn.get(data.payload.schema,data.payload.id).then((obj)=>{
+
                             //logger.debug('Object was ' + JSON.stringify(JSON.parse(obj)));
                             logger.debug('<span style="color:red;font-weight:bold;">A chaincode event happened - txId: ' + (data.tx_id ? data.tx_id : '-no tx id-') + '</span>');
                             self.emit('transaction',data,JSON.parse(obj));
