@@ -51,6 +51,10 @@ export class Geofence{
             logger.debug(JSON.stringify(otherPoint));
             
             let distance = this.distance(point.coordinates[0], point.coordinates[1], otherPoint.coordinates[0], otherPoint.coordinates[1]);
+            
+            if(distance < 1000){
+                logger.debug("arrived");
+            }
 
             logger.debug(distance.toString() + ' meters distance (' + distance/1000  + ' km)');
             
